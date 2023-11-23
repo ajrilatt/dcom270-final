@@ -1,1 +1,104 @@
+/*
+Adam Rilatt, Erin Sinatra, Cole Byerly, Luca Cammarota
+20 November 2023
+PDM Final Project -- Holiday Jeopardy Stylesheet
+*/
 
+:root {
+  --background: #99a4dd;  /* same as background color from holiday picture */
+  --button-background: #fff;
+  --button-accent: #8bf;
+  --button-clickable-background: #abf;
+  --button-clickable-accent: #68f;
+  --button-border: #888;
+
+  --grid-width: 80vw;
+  --grid-height: 80vh;
+  --question-margin: 1vh;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: var(--background);
+  font-size: 1rem;
+  font-family: "Jua", sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.base-button {
+	background: linear-gradient(to bottom, var(--button-background) 5%, var(--button-accent) 100%);
+	background-color: var(--button-background);
+	border-radius: 10px;
+	border: 3px solid var(--button-border);
+	display: inline-block;
+	color: #222;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.base-button.click-button {
+	background: linear-gradient(to bottom, var(--button-clickable-background) 5%, var(--button-clickable-accent) 100%);
+	cursor: pointer;
+}
+
+.base-button.click-button:hover {
+	background: linear-gradient(to bottom, var(--button-clickable-accent) 5%, var(--button-clickable-background) 100%);
+}
+
+.base-button.click-button:active {
+	position: relative;
+	top: 3px;
+}
+
+/* This tiles the game grid with columns being placed inline and their child
+elements being placed vertically. */
+.game-column {
+  display: inline-block;
+  font-size: 1rem; /* corrects the zero'd font size used to correct the element
+  spacing while using border-box */
+  width: calc(var(--grid-width) / 4);
+}
+
+/* All divs within game-columns are questions. */
+.game-column > div {
+  display: block;
+  height: calc(var(--grid-height) / 5 - 5 * var(--question-margin));
+  margin: var(--question-margin);
+  text-align: center;
+  line-height: calc(var(--grid-height) / 5 - 5 * var(--question-margin));
+}
+
+#game-title {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+#start-button {
+  display: block;
+  width: 10vw;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#game-title {
+  margin-top: 40vh;
+}
+
+#game-grid {
+  display: block;
+  width: var(--grid-width);
+  height: var(--grid-height);
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  font-size: 0; /* Setting font-size to 0 ensures white space between elements
+  has no pixel width, ensuring correct width calculations for the row and preventing
+  overflow while using border-box. */
+}

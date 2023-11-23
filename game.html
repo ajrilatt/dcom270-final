@@ -1,0 +1,150 @@
+<!--
+Adam Rilatt, Erin Sinatra, Cole Byerly, Luca Cammarota
+22 November 2023
+PDM Final Project -- Holiday Jeopardy Game Page
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title>
+    Holiday Jeopardy
+  </title>
+  <meta charset="utf-8">
+  <meta name="author" content="Adam R">
+  <meta name="description" content="Holiday Jeopardy game">
+
+  <!-- Jua font -->
+  <!-- BY CB -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=VT323&display=swap" rel="stylesheet"> 
+
+  <link rel="stylesheet" type="text/css" href="holiday_style.css" />
+  
+</head>
+<body>
+
+  <!-- The game grid is divided into four columns, each of which has five questions. -->
+  <!-- Questions by ES -->
+  <div id="game-grid">
+
+    <div id="column-christmas" class="game-column">
+
+      <div class="base-button">
+        Christmas
+      </div>
+
+      <!-- TODO: instead of building these statically, have a JS function that
+      generates them with relevant labels, onClick functions, et cetera -->
+      <div class="base-button click-button">
+        100
+      </div>
+
+      <div class="base-button click-button">
+        200
+      </div>
+
+      <div class="base-button click-button">
+        300
+      </div>
+
+      <div class="base-button click-button">
+        400
+      </div>
+      
+      <div class="base-button click-button">
+        500
+      </div>
+      
+    </div>
+
+    <div id="column-hanukkah" class="game-column">
+      
+      <div class="base-button">
+        Hanukkah
+      </div>
+      
+      <div class="base-button click-button">
+        100
+      </div>
+
+      <div class="base-button click-button">
+        200
+      </div>
+
+      <div class="base-button click-button">
+        300
+      </div>
+
+      <div class="base-button click-button">
+        400
+      </div>
+      
+      <div class="base-button click-button">
+        500
+      </div>
+
+    </div>
+  
+    <div id="column-kwanzaa" class="game-column">
+      
+      <div class="base-button">
+        Kwanzaa
+      </div>
+      
+      <div class="base-button click-button">
+        100
+      </div>
+
+      <div class="base-button click-button">
+        200
+      </div>
+
+      <div class="base-button click-button">
+        300
+      </div>
+
+      <div class="base-button click-button">
+        400
+      </div>
+      
+      <div class="base-button click-button">
+        500
+      </div>
+
+    </div>
+    
+    <div id="column-all" class="game-column">
+      
+      <div class="base-button">
+        All
+      </div>
+      
+      <div class="base-button click-button">
+        100
+      </div>
+
+      <div class="base-button click-button">
+        200
+      </div>
+
+      <div class="base-button click-button">
+        300
+      </div>
+
+      <div class="base-button click-button">
+        400
+      </div>
+      
+      <div class="base-button click-button">
+        500
+      </div>
+
+    </div>
+    
+  </div>
+
+</body>
+</html>
