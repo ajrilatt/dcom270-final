@@ -26,7 +26,8 @@ body {
   font-family: "Jua", sans-serif;
   overflow-x: hidden;
   overflow-y: hidden;
-	background-image: url("holidaybackground.jpg")
+background-image: url("holidaybackground.jpg")
+  background-size: 100%;
 }
 
 .base-button {
