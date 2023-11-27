@@ -102,20 +102,4 @@ elements being placed vertically. */
   has no pixel width, ensuring correct width calculations for the row and preventing
   overflow while using border-box. */
 
-img.bg {
-    min-height: 100%;
-    min-width: 1024px;
-    width: 100%;
-    height: auto;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-@media screen and (max-width: 1024px) {
-    img.bg {
-        left: 50%;
-        margin-left: -512px;
-    }
-}
 }
