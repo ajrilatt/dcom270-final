@@ -4,18 +4,14 @@ Adam Rilatt, Erin Sinatra, Cole Byerly, Luca Cammarota
 PDM Final Project -- Holiday Jeopardy Game Page
 */
 
-// NOTE: It is assumed that jQuery has been loaded before this script.
+// By AR unless otherwise noted
 
-// NOTE: To keep it simple, we're just going to load the questions from a big
-// JSON blob that I'll hard-code into this file. There are cleaner ways of doing
-// this, but this will do.
-
-// Javascript by AR
+// Javascript object by AR
 // Questions by ES
 const questions = {
   "christmas": [
     {
-      "question": "What day is Christmas?";
+      "question": "What day is Christmas?",
       "options": [
         "December 20",
         "December 31",
@@ -67,7 +63,7 @@ const questions = {
   ],
   "hanukkah": [
     {
-      "question": "How many nights does Hanukkah last?";
+      "question": "How many nights does Hanukkah last?",
       "options": [
         "Seven",
         "Five",
@@ -119,7 +115,7 @@ const questions = {
   ],
   "kwanzaa": [
     {
-      "question": "What are the three colors of Kwanzaa?";
+      "question": "What are the three colors of Kwanzaa?",
       "options": [
         "Blue, Yellow, Green",
         "Orange, Red, Yellow",
@@ -172,7 +168,7 @@ const questions = {
   // NOTE: the category "all" has 3 options instead of 4.
   "all": [
     {
-      "question": "What holiday does the Grinch steal?";
+      "question": "What holiday does the Grinch steal?",
       "options": [
         "Christmas",
         "Kwanzaa",
@@ -235,24 +231,81 @@ const questions = {
 let user_score = 0;
 let questions_remaining = 20;
 
-// Input the string name of a category, e.g. "Christmas", and the index of the question, e.g. 2 for the 3rd question.
+// Called on page ready, this function targets each category column on the page
+// and fills it with a header and five questions.
+function generate_game_grid() {
+  
+  for (let category of ["christmas", "hanukkah", "kwanzaa", "all"]) {
+
+    // This is the column into which we will put our question buttons.
+    let target_category = $("#column-" + category);
+
+    let buttons = "";
+
+    // To start, we add a non-clickable button which serves as a header.
+    // Because our categories are lowercase, we'll capitalize the column title
+    // here.
+    let column_title = category.charAt(0).toUpperCase() + category.slice(1);
+    buttons += `
+      <div class="base-button">
+        ${column_title}
+      </div>
+    `;
+
+    // We add the next five elements in a similar manner, generating unique
+    // IDs which will be used to load the content corresponding to the particular
+    // button the user selects.
+    for (let i = 0; i < 5; ++i) {
+
+      let question_id = category + "-" + i.toString();
+      buttons += `
+        <div id="${question_id}" class="base-button click-button" onclick="generate_question_slide('${question_id}')">
+          ${(i + 1) * 100}
+        </div>
+      `;
+      
+    }
+
+    // Fill the target column with the header and the five questions.
+    target_category.html(buttons);
+    
+  }
+  
+}
+
+// Takes a string which contains the ID of a question in the game grid.
 // Returns an HTML structure containing a formatted question slide.
 // TODO: format the output of this HTML in the CSS stylesheet
-function generate_question_slide(category, num) {
+function generate_question_slide(question_id) {
 
-  let question = questions[category][num];
+  // NOTE: question_id is in the form "holiday-number", where the holiday
+  // corresponds to a column and the number [0-4] corresponds to the index of
+  // the question within the JSON question array. We extract these parts by
+  // splitting on the dash.
+  let category = question_id.substring(0, question_id.indexOf("-"));
+  let question_num = parseInt(question_id.substring(question_id.indexOf("-") + 1));
+  let question = questions[category][question_num];
 
+  // Building the individual questions...
   let options = "";
   for (let i = 0; i < question["options"].length; ++i) {
+
+    // NOTE: The answer_ids are superkeys of the question_ids and can be used by
+    // the call to process_answer() to target the corresponding question button
+    // (it will have to be disabled once the question has been answered). It can
+    // also be used to target the selected answer, and can also be parsed and
+    // combined with question data to target the correct answer button.
+    let answer_id = question_id + "-" + i.toString();
     options += `
-      <div class="base-button click-button" onclick="grade_answer(${category}, ${num}, ${i})">
+      <div id="${answer_id}" class="base-button click-button question-option" onclick="process_answer('${answer_id}')">
         ${question["options"][i]}
       </div>
     `;
   }
 
+  // Building the overall slide and inserting the questions.
   let slide = `
-    <div class="question-slide">
+    <div id="question-slide">
       <div class="base-button question-prompt">
         ${question["question"]}
       </div>
@@ -260,12 +313,22 @@ function generate_question_slide(category, num) {
     </div>
   `;
   
-  return slide;
+  $("#question-slide-container").html(slide).show();
+  
 }
 
+//function process_answer(answer_id) {
+//  
+//  let 
+//  
+//  if (grade_answer()) {
+//    reveal_answer();
+//  }
+//  
+//}
+
 // Takes an index of a question answer, checks whether it's correct, and awards
-// the correct number of points based on the index of the question, then returns
-// a boolean representing whether the answer was correct.
+// the correct number of points based on the index of the question.
 // TODO: pipe results into a function that updates display values. This can be 
 // done by wrapping grade_answer() and reveal_answer() in a process_answer()
 // function
@@ -278,11 +341,7 @@ function grade_answer(category, question_index, answer_index) {
   
   if (question["correct"] === answer_index) {
     user_score += num_points;
-    return true;
   }
-
-  // If we're here, the answer is incorrect-- no else clause needed.
-  return false;
   
 }
 
@@ -303,3 +362,7 @@ function reveal_answer(category, question_index, answer_index) {
   // to the correct answer, and a reference to the selected answer?
   
 }
+
+$(document).ready(function() {
+  generate_game_grid();  
+});

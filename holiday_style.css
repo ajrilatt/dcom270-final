@@ -4,6 +4,8 @@ Adam Rilatt, Erin Sinatra, Cole Byerly, Luca Cammarota
 PDM Final Project -- Holiday Jeopardy Stylesheet
 */
 
+/* By AR unless otherwise noted */
+
 :root {
   --background: #99a4dd;  /* same as background color from holiday picture */
   --button-background: #fff;
@@ -26,7 +28,7 @@ body {
   font-family: "Jua", sans-serif;
   overflow-x: hidden;
   overflow-y: hidden;
-background-image: url("holidaybackground.jpg")
+  background-image: url("media/holidaybackground.jpg"); /* background by CB */
   background-size: 100%;
 }
 
@@ -74,6 +76,24 @@ elements being placed vertically. */
   line-height: calc(var(--grid-height) / 5 - 5 * var(--question-margin));
 }
 
+.question-prompt {
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5%;
+  text-align: center;
+  line-height: 4rem;
+}
+
+.question-option {
+  display: inline-block;
+  width: 39%; /* the borders take up space and I don't want to deal with them */
+  margin: 5%;
+  text-align: center;
+  line-height: 4rem;
+}
+
 #game-title {
   text-align: center;
   font-size: 4rem;
@@ -89,7 +109,12 @@ elements being placed vertically. */
 }
 
 #game-title {
+  display: block;
+  width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 40vh;
+  margin-bottom: 10vh
 }
 
 #game-grid {
@@ -103,5 +128,24 @@ elements being placed vertically. */
   font-size: 0; /* Setting font-size to 0 ensures white space between elements
   has no pixel width, ensuring correct width calculations for the row and preventing
   overflow while using border-box. */
+}
 
+/* The question slide will be placed in the center of the screen, over top of
+the content. Its container is hidden; when shown, it will have the effect of
+darkening the page as is common when a modal opens. */
+#question-slide-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+#question-slide {
+  width: 60vw;
+  height: 60vh;
+  margin: auto;
+  margin-top: 20vh;
 }
