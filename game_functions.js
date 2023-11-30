@@ -231,6 +231,9 @@ const questions = {
 let user_score = 0;
 let questions_remaining = 20;
 
+// A quick-and-dirty sleep function.
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
 // Called on page ready, this function targets each category column on the page
 // and fills it with a header and five questions.
 function generate_game_grid() {
@@ -275,16 +278,14 @@ function generate_game_grid() {
 
 // Takes a string which contains the ID of a question in the game grid.
 // Returns an HTML structure containing a formatted question slide.
-// TODO: format the output of this HTML in the CSS stylesheet
 function generate_question_slide(question_id) {
 
   // NOTE: question_id is in the form "holiday-number", where the holiday
   // corresponds to a column and the number [0-4] corresponds to the index of
   // the question within the JSON question array. We extract these parts by
   // splitting on the dash.
-  let category = question_id.substring(0, question_id.indexOf("-"));
-  let question_num = parseInt(question_id.substring(question_id.indexOf("-") + 1));
-  let question = questions[category][question_num];
+  let [category, question_num] = question_id.split("-");
+  let question = questions[category][parseInt(question_num)];
 
   // Building the individual questions...
   let options = "";
@@ -317,52 +318,84 @@ function generate_question_slide(question_id) {
   
 }
 
-//function process_answer(answer_id) {
-//  
-//  let 
-//  
-//  if (grade_answer()) {
-//    reveal_answer();
-//  }
-//  
-//}
+async function process_answer(answer_id) {
+  
+  // grade_answer() assigns points based on correctness. If the answer is
+  // correct, it displays a positive animation on the score to draw the user's
+  // eye.
+  grade_answer(answer_id);
 
-// Takes an index of a question answer, checks whether it's correct, and awards
-// the correct number of points based on the index of the question.
-// TODO: pipe results into a function that updates display values. This can be 
-// done by wrapping grade_answer() and reveal_answer() in a process_answer()
-// function
-function grade_answer(category, question_index, answer_index) {
-  
-  questions_remaining -= 1;
-  
-  let question = questions[category][question_index];
-  let num_points = (question_index + 1) * 100;
-  
-  if (question["correct"] === answer_index) {
-    user_score += num_points;
-  }
+  // reveal_answer() highlights the correct answer in green and an incorrect
+  // answer in red; it also changes the size of the incorrect buttons to
+  // emphasize the correct answer.
+  reveal_answer(answer_id);
+
+  await sleep(3000);
+
+  remove_question(answer_id);
+
+  // TODO: deactivate modal and return to game
   
 }
 
-// Takes the index of the correct answer option and the index of the user's
-// answer selection. The correct answer is shown in green; an incorrect answer
-// is highlighted in red; the score is updated; and the corresponding question
-// in the game grid is blanked out / made unselectable.
-// TODO: implement with jQuery
-function reveal_answer(category, question_index, answer_index) {
+// Given the HTML id of the user-selected answer, determines whether the answer
+// is correct and awards points.
+function grade_answer(answer_id) {
   
-  // TODO: combination of category and question_index can be used to uniquely
-  // target the game grid button corresponding to this question-- is it worth
-  // passing a jQuery reference to the game grid button instead?
+  let [category, question_num, answer_num] = answer_id.split("-");
+  let question = questions[category][parseInt(question_num)];
+    
+  let num_points = (parseInt(question_num) + 1) * 100;
   
-  // TODO: All question slides will have the same ID so the slide element can
-  // be easily targeted; then the potential answer selections can also be
-  // targeted. Is it better to pass a jQuery reference to the slide, a reference
-  // to the correct answer, and a reference to the selected answer?
+  if (question["correct"] === parseInt(answer_num)) {
+    user_score += num_points;
+  }
+
+  questions_remaining -= 1;
+  
+}
+
+// Display answer details. The correct answer is shown in green; an incorrect
+// answer is highlighted in red.
+function reveal_answer(answer_id) {
+
+  let [category, question_num, answer_num] = answer_id.split("-");
+  let question = questions[category][parseInt(question_num)];
+  let question_id = category + "-" + question_num;
+  let correct_id = question_id + "-" + question["correct"].toString();
+
+  // Convert all buttons to non-clickable first to convey to the user that
+  // their action is complete.
+  // NOTE: using removeAttr() to remove an inline HTML onclick is technically
+  // not supported on Internet Explorer, but it's deprecated, so we don't care.
+  $(".question-option").removeClass("click-button").removeAttr("onclick");
+
+  $("#" + correct_id).animate({
+      "font-size": "2rem",
+      "line-height": "4.5rem",
+      "color": "#0e0",
+  }, 500);
+
+  if (correct_id !== answer_id) {
+    $("#" + answer_id).animate({
+      "color": "#e00",
+    }, 500)
+  }
+
+}
+
+// Marks the question that was just answered as complete by removing the point
+// value and making it an unselectable button.
+function remove_question(answer_id) {
+
+  let [category, question_num, answer_num] = answer_id.split("-");
+  let question_id = category + "-" + question_num;
+
+  $("#" + question_id).removeClass("click-button")
+                      .removeAttr("onclick")
   
 }
 
 $(document).ready(function() {
-  generate_game_grid();  
+  generate_game_grid();
 });
