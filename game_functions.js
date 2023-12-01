@@ -230,6 +230,10 @@ const questions = {
 
 let user_score = 0;
 let questions_remaining = 20;
+let score_stats = {
+  "first_completed_category": null,
+  // TODO: more stats go here... ER?
+};
 
 // A quick-and-dirty sleep function.
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
@@ -314,7 +318,7 @@ function generate_question_slide(question_id) {
     </div>
   `;
   
-  $("#question-slide-container").html(slide).show();
+  $("#question-slide-container").html(slide).fadeIn("slow");
   
 }
 
@@ -330,12 +334,25 @@ async function process_answer(answer_id) {
   // emphasize the correct answer.
   reveal_answer(answer_id);
 
-  await sleep(3000);
+  // Give the user some time to view their results.
+  await sleep(50);
 
   remove_question(answer_id);
 
-  // TODO: deactivate modal and return to game
-  
+  // Close the question slide.
+  kill_modal();
+
+  if (questions_remaining < 1) {
+    // TODO: We probably want an animation or something before the final score.
+    // TODO: Add a button or something to go to the scoreboard?
+
+    // TODO: this is just a dummy until there's an animation
+    await sleep(2000);
+    
+    scoreboard_redirect(score_stats);
+    
+  }
+
 }
 
 // Given the HTML id of the user-selected answer, determines whether the answer
@@ -349,6 +366,7 @@ function grade_answer(answer_id) {
   
   if (question["correct"] === parseInt(answer_num)) {
     user_score += num_points;
+    $("#point-counter").html(user_score);
   }
 
   questions_remaining -= 1;
@@ -370,16 +388,19 @@ function reveal_answer(answer_id) {
   // not supported on Internet Explorer, but it's deprecated, so we don't care.
   $(".question-option").removeClass("click-button").removeAttr("onclick");
 
-  $("#" + correct_id).animate({
-      "font-size": "2rem",
-      "line-height": "4.5rem",
-      "color": "#0e0",
+  // To make all incorrect questions smaller...
+  $(".question-option").not("#" + correct_id).animate({
+    "font-size": "1rem",
   }, 500);
+  
+  $("#" + correct_id).animate({
+      "color": "#0e0",
+  }, 500);  
 
   if (correct_id !== answer_id) {
     $("#" + answer_id).animate({
       "color": "#e00",
-    }, 500)
+    }, 500);
   }
 
 }
@@ -393,6 +414,24 @@ function remove_question(answer_id) {
 
   $("#" + question_id).removeClass("click-button")
                       .removeAttr("onclick")
+  
+}
+
+// Clears the question slide from the screen.
+function kill_modal() {
+  $("#question-slide-container").fadeOut("slow");
+}
+
+// Given an object with statistics about the player's performance, generates
+// a "player type" label, encodes that label into a URL for the scoreboard page,
+// then redirects the user to that page to view their results.
+function scoreboard_redirect(stats) {
+
+  let scoreboard_url = "score.html";
+
+  // TODO: generate ints to encode player type
+
+  window.location.href = scoreboard_url;
   
 }
 

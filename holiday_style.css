@@ -149,3 +149,12 @@ darkening the page as is common when a modal opens. */
   margin: auto;
   margin-top: 20vh;
 }
+
+#point-counter {
+  position: absolute;
+  top: 3vh;
+  left: 48vw;
+  z-index: 2;
+  min-width: 5vw;
+  text-align: center;
+}
