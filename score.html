@@ -24,11 +24,28 @@ PDM Final Project -- Holiday Jeopardy Score Page
 
   <link rel="stylesheet" type="text/css" href="holiday_style.css" />
   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>  
+  <script src="http://code.jquery.com/color/jquery.color-2.1.2.js"></script>
+  <script src="score_functions.js"></script> 
+  
 </head>
 <body>
 
-  <!-- TODO: build scoreboard -->
-  THIS IS WHERE THE SCOREBOARD GOES FELLAS
+  <!-- NOTE: on page ready, some Javascript will grab the score from the URL. -->
+  <div id="scoreboard">
+  
+    <div id="player-score" class="base-button">
+    </div>
+
+    <div id="player-stat" class="base-button">
+    </div>
+
+    <a id="play-again" class="base-button click-button" href="game.html">
+      Play Again!
+    </a>
+  
+  </div>
+  
 
 </body>
 </html>

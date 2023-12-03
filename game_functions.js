@@ -1,7 +1,7 @@
 /*
 Adam Rilatt, Erin Sinatra, Cole Byerly, Luca Cammarota
 22 November 2023
-PDM Final Project -- Holiday Jeopardy Game Page
+PDM Final Project -- Holiday Jeopardy Game Page Functions
 */
 
 // By AR unless otherwise noted
@@ -212,19 +212,6 @@ const questions = {
       ],
       "correct": 1
     }
-  ],
-  // Final Jeopardy
-  // NOTE: This isx structured the same as actual categories for convenience
-  "final": [
-    {
-      "question": "What holiday uses the phrase \"Habari Gani\" on the first day?",
-      "options": [
-        "Christmas",
-        "Kwanzaa",
-        "Hanukkah"
-      ],
-      "correct": 1
-    }
   ]
 };
 
@@ -335,7 +322,7 @@ async function process_answer(answer_id) {
   reveal_answer(answer_id);
 
   // Give the user some time to view their results.
-  await sleep(50);
+  await sleep(2000);
 
   remove_question(answer_id);
 
@@ -343,10 +330,8 @@ async function process_answer(answer_id) {
   kill_modal();
 
   if (questions_remaining < 1) {
-    // TODO: We probably want an animation or something before the final score.
-    // TODO: Add a button or something to go to the scoreboard?
 
-    // TODO: this is just a dummy until there's an animation
+    // TODO: Add an animation here, then redirect once it's done.
     await sleep(2000);
     
     scoreboard_redirect(score_stats);
@@ -377,6 +362,8 @@ function grade_answer(answer_id) {
 // answer is highlighted in red.
 function reveal_answer(answer_id) {
 
+  let delay_ms = 500;
+  
   let [category, question_num, answer_num] = answer_id.split("-");
   let question = questions[category][parseInt(question_num)];
   let question_id = category + "-" + question_num;
@@ -391,16 +378,16 @@ function reveal_answer(answer_id) {
   // To make all incorrect questions smaller...
   $(".question-option").not("#" + correct_id).animate({
     "font-size": "1rem",
-  }, 500);
+  }, delay_ms);
   
   $("#" + correct_id).animate({
       "color": "#0e0",
-  }, 500);  
+  }, delay_ms);  
 
   if (correct_id !== answer_id) {
     $("#" + answer_id).animate({
       "color": "#e00",
-    }, 500);
+    }, delay_ms);
   }
 
 }
@@ -427,10 +414,8 @@ function kill_modal() {
 // then redirects the user to that page to view their results.
 function scoreboard_redirect(stats) {
 
-  let scoreboard_url = "score.html";
-
-  // TODO: generate ints to encode player type
-
+  // TODO: replace rank field dummy value with actual statistic
+  let scoreboard_url = `score.html?score=${user_score}&rank=${0}`;
   window.location.href = scoreboard_url;
   
 }
