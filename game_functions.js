@@ -426,7 +426,6 @@ $(document).ready(function() {
 
                   
                   // Snow by CB
-  //Configure below to change URL path to the snow image
   var snowsrc="snow.gif"
   // Configure below to change number of snow to render
   var no = 10;
