@@ -426,7 +426,7 @@ $(document).ready(function() {
 
                   
                   // Snow by CB
-  var snowsrc="snow.gif"
+  var snowsrc="media/snow.gif"
   // Configure below to change number of snow to render
   var no = 10;
   // Configure whether snow should disappear after x seconds (0=never):
