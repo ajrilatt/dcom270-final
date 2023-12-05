@@ -42,7 +42,7 @@ $(document).ready(function() {
 }
 
 // Snow by CB
-  let snowsrc="media\snow.gif"
+  let snowsrc="media/snow.gif"
   // Configure below to change number of snow to render
   let no = 10;
   // Configure whether snow should disappear after x seconds (0=never):
@@ -77,7 +77,7 @@ $(document).ready(function() {
   am = new Array();
   stx = new Array();
   sty = new Array();
-  snowsrc=(snowsrc.indexOf("")!=-1)? "snow.gif" : snowsrc
+  snowsrc=(snowsrc.indexOf("")!=-1)? "media/snow.gif" : snowsrc
   for (i = 0; i < no; ++ i) {  
     dx[i] = 0;                        // set coordinate variables
     xp[i] = Math.random()*(doc_width-50);  // set position variables
