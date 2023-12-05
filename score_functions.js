@@ -42,26 +42,26 @@ $(document).ready(function() {
 }
 
 // Snow by CB
-  var snowsrc="media/snow.gif"
+  let snowsrc="media/snow.gif"
   // Configure below to change number of snow to render
-  var no = 10;
+  let no = 10;
   // Configure whether snow should disappear after x seconds (0=never):
-  var hidesnowtime = 0;
+  let hidesnowtime = 0;
   // Configure how much snow should drop down before fading ("windowheight" or "pageheight")
-  var snowdistance = "pageheight";
+  let snowdistance = "pageheight";
 
 ///////////Stop Config//////////////////////////////////
 
-  var ie4up = (document.all) ? 1 : 0;
-  var ns6up = (document.getElementById&&!document.all) ? 1 : 0;
+  let ie4up = (document.all) ? 1 : 0;
+  let ns6up = (document.getElementById&&!document.all) ? 1 : 0;
 
   function iecompattest(){
   return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
   }
 
-  var dx, xp, yp;    // coordinate and position variables
-  var am, stx, sty;  // amplitude and step variables
-  var i, doc_width = 800, doc_height = 600; 
+  let dx, xp, yp;    // coordinate and position variables
+  let am, stx, sty;  // amplitude and step variables
+  let i, doc_width = 800, doc_height = 600; 
   
   if (ns6up) {
     doc_width = self.innerWidth;
