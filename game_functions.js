@@ -425,7 +425,7 @@ $(document).ready(function() {
 }
 
                   
-                  // Snow by CB
+  // Snow by CB
   var snowsrc="media/snow.gif"
   // Configure below to change number of snow to render
   var no = 10;
@@ -478,7 +478,7 @@ $(document).ready(function() {
     }
   }
 
-  function snowIE_NS6() {  // IE and NS6 main animation function
+  function snowIE_NS6() {  
     doc_width = ns6up?window.innerWidth-10 : iecompattest().clientWidth-10;
     doc_height=(window.innerHeight && snowdistance=="windowheight")? window.innerHeight : (ie4up && snowdistance=="windowheight")?  iecompattest().clientHeight : (ie4up && !window.opera && snowdistance=="pageheight")? iecompattest().scrollHeight : iecompattest().offsetHeight;
   if (snowdistance=="windowheight"){
