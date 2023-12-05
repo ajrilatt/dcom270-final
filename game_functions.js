@@ -422,7 +422,7 @@ function scoreboard_redirect(stats) {
 
 $(document).ready(function() {
   generate_game_grid();
-}
+});
 
                   
   // Snow by CB
@@ -514,4 +514,3 @@ if (ie4up||ns6up){
     setTimeout("hidesnow()", hidesnowtime*1000)
     }
 // End snow
-});
