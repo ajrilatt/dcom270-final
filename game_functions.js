@@ -323,7 +323,7 @@ async function process_answer(answer_id) {
 
   // Give the user some time to view their results.
   await sleep(2000);
-
+$("#point-counter").toggleClass('enlarge-shrink-glow');
   remove_question(answer_id);
 
   // Close the question slide.
@@ -352,6 +352,7 @@ function grade_answer(answer_id) {
   if (question["correct"] === parseInt(answer_num)) {
     user_score += num_points;
     $("#point-counter").html(user_score);
+    $("#point-counter").toggleClass('enlarge-shrink-glow');
   }
 
   questions_remaining -= 1;
