@@ -348,7 +348,7 @@ function grade_answer(answer_id) {
   let question = questions[category][parseInt(question_num)];
     
   let num_points = (parseInt(question_num) + 1) * 100;
-  
+  //toggle class function by LC
   if (question["correct"] === parseInt(answer_num)) {
     user_score += num_points;
     $("#point-counter").html(user_score);
@@ -399,8 +399,8 @@ function remove_question(answer_id) {
 
   let [category, question_num, answer_num] = answer_id.split("-");
   let question_id = category + "-" + question_num;
-
-  $("#" + question_id).removeClass("click-button")
+                                                  //LC and ES
+  $("#" + question_id).removeClass("click-button").addClass("answered-button")
                       .removeAttr("onclick")
   
 }
