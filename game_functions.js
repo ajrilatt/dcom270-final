@@ -461,7 +461,7 @@ $(document).ready(function() {
   am = new Array();
   stx = new Array();
   sty = new Array();
-  snowsrc=(snowsrc.indexOf("")!=-1)? "snow.gif" : snowsrc
+  snowsrc=(snowsrc.indexOf("")!=-1)? "media\snow.gif" : snowsrc
   for (i = 0; i < no; ++ i) {  
     dx[i] = 0;                        // set coordinate variables
     xp[i] = Math.random()*(doc_width-50);  // set position variables
