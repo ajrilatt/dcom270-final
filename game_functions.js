@@ -217,11 +217,25 @@ const questions = {
 
 let user_score = 0;
 let questions_remaining = 20;
-let score_stats = {
-  "first_completed_category": null,
-  // TODO: more stats go here... ER?
-};
 
+// This boolean array stores the status of several categories.
+// The categories available are "christmas_master", "hanukkah_master",
+// "kwanzaa_master", "low_score", and "high_score", in that order.
+// Each one of these categories corresponds to a rank statistic the user can 
+// achieve while playing. The corresponding flag will be set when they achieve
+// that statistic, and the first one to appear in the list will be used.
+let score_stats = [
+  false, false, false, false, false, false
+]
+
+let rank_trackers = {
+  "christmas": 5,
+  "hanukkah": 5,
+  "kwanzaa": 5,
+  "low": 4,
+  "high": 4
+}
+  
 // A quick-and-dirty sleep function.
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
@@ -355,6 +369,34 @@ function grade_answer(answer_id) {
     $("#point-counter").toggleClass('enlarge-shrink-glow');
   }
 
+  // If the user hasn't achieved a rank statistic yet, update the trackers
+  // to detect when they do.
+  if (!score_stats.some((x) => x)) {
+
+    // Update the counter of how many Christmas / Hanukkah / Kwanzaa questions
+    // the user has answered. If !rank_trackers[<holiday>] returns true, then
+    // there are no questions left in that category, so the appropriate rank
+    // statistic flag is set.
+    if (category != "all") {
+      --rank_trackers[category];      
+      score_stats[0] = !rank_trackers["christmas"];
+      score_stats[1] = !rank_trackers["hanukkah"];
+      score_stats[2] = !rank_trackers["kwanzaa"];
+    }
+
+    // Update the number of high / low score questions they've answered.    
+    if (question_num == 0) {
+      --rank_trackers["low"];
+      score_stats[3] = !rank_trackers["low"];
+    }
+
+    if (question_num == 4) {
+      --rank_trackers["high"];
+      score_stats[4] = !rank_trackers["high"];
+    }
+        
+  }
+
   questions_remaining -= 1;
   
 }
@@ -415,8 +457,13 @@ function kill_modal() {
 // then redirects the user to that page to view their results.
 function scoreboard_redirect(stats) {
 
-  // TODO: replace rank field dummy value with actual statistic
-  let scoreboard_url = `score.html?score=${user_score}&rank=${0}`;
+  let rank = score_stats.indexOf(true);
+  // NOTE: It is physically impossible for the user to complete the game without
+  // having a rank statistic-- they'll have to complete one column eventually,
+  // so they'll have a column mastery (e.g. Christmas expert) if nothing else.
+  // Therefore the results of this indexOf call will never be -1.
+  
+  let scoreboard_url = `score.html?score=${user_score}&rank=${rank}`;
   window.location.href = scoreboard_url;
   
 }

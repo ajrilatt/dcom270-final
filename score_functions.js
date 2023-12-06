@@ -6,15 +6,31 @@ PDM Final Project -- Holiday Jeopardy Scoreboard Functions
 
 // By AR unless otherwise noted
 
+// Rank statistic names by ER
 // NOTE: These rank statistic options are indexed by the 'rank' parameter
 // passed in the URL.
-// TODO: Add more ranks -- ER?
 const stat_options = [
-  {
-    "name": "Cheapskate",
-    "description": "finished the 100 questions first"
-  }
+  "You got the Christmas Spirit!",
+  "Spin that Dreidel! You're on a Roll!",
+  "You Know Your Kwanzaa!",
+  "Challenge Yourself!",
+  "High Roller!"
 ];
+
+// Given a numeric score from 0-6000, generate a string to describe that score.
+function gen_score_label(score) {
+
+  // NOTE: These are listed in the correct order so that else { } blocks aren't
+  // needed.
+  if (score < 2000)
+    return "Hope you learned something new!";
+
+  if (score < 4000)
+    return "Happy Holidays to You!";
+
+  return "You put in the work this Holiday Season!";
+  
+}
 
 // Extract the player score and rank statistic from the URL, then update
 // the page to contain that information.
@@ -28,11 +44,12 @@ function update_score() {
 
   $("#player-score").html(`
       Your Score:<br />
-      ${score}
+      ${score}<br />
+      ${gen_score_label(score)}
   `);
 
   $("#player-stat").html(`
-     <em>${rank["name"]}</em>: ${rank["description"]}
+     <em>${rank}</em>
   `);
   
 }
