@@ -12,6 +12,8 @@ PDM Final Project -- Holiday Jeopardy Stylesheet
   --button-accent: #8bf;
   --button-clickable-background: #abf;
   --button-clickable-accent: #68f;
+  --button-clickable-background-answered: #8e97bf;
+  --button-clickable-accent-answered: #6d728a;
 
   --grid-width: 80vw;
   --grid-height: 80vh;
@@ -46,6 +48,11 @@ body {
 .base-button.click-button {
 	background: linear-gradient(to bottom, var(--button-clickable-background) 5%, var(--button-clickable-accent) 100%);
 	cursor: pointer;
+}
+
+.base-button.answered-button {
+  background: linear-gradient(to bottom, var(--button-clickable-background-answered) 5%, var(--button-clickable-accent-answered) 100%);
+  cursor: pointer;
 }
 
 .base-button.click-button:hover {
@@ -193,3 +200,23 @@ darkening the page as is common when a modal opens. */
   margin-right: calc((100% - 20vw) / 2);
   
 }
+
+@keyframes textAnimation {
+      0% {
+        font-size: 16px;
+        text-shadow: none;
+      }
+      50% {
+        font-size: 24px;
+        text-shadow: 0 0 10px rgba(255, 215, 0);
+      }
+      100% {
+        font-size: 16px;
+        text-shadow: none;
+      }
+    }
+
+    .enlarge-shrink-glow {
+      display: inline-block;
+      animation: textAnimation 2s;
+    }
