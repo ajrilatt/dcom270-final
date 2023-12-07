@@ -56,7 +56,7 @@ function update_score() {
 
 $(document).ready(function() {
   update_score();
-}
+});
 
 // Snow by CB
   let snowsrc="media/snow.gif"
@@ -147,4 +147,3 @@ if (ie4up||ns6up){
     setTimeout("hidesnow()", hidesnowtime*1000)
     }
 // End snow
-});
