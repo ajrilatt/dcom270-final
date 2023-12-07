@@ -417,7 +417,6 @@ function reveal_answer(answer_id) {
   // NOTE: using removeAttr() to remove an inline HTML onclick is technically
   // not supported on Internet Explorer, but it's deprecated, so we don't care.
   $(".question-option").removeClass("click-button")
-                       .addClass("answered-button")
                        .removeAttr("onclick");
 
   // To make all incorrect questions smaller...
