@@ -337,7 +337,7 @@ async function process_answer(answer_id) {
 
   // Give the user some time to view their results.
   await sleep(2000);
-$("#point-counter").toggleClass('enlarge-shrink-glow');
+  
   remove_question(answer_id);
 
   // Close the question slide.
@@ -362,10 +362,10 @@ function grade_answer(answer_id) {
   let question = questions[category][parseInt(question_num)];
     
   let num_points = (parseInt(question_num) + 1) * 100;
-  //toggle class function by LC
   if (question["correct"] === parseInt(answer_num)) {
     user_score += num_points;
     $("#point-counter").html(user_score);
+    // toggle class function by LC
     $("#point-counter").toggleClass('enlarge-shrink-glow');
   }
 
@@ -416,7 +416,9 @@ function reveal_answer(answer_id) {
   // their action is complete.
   // NOTE: using removeAttr() to remove an inline HTML onclick is technically
   // not supported on Internet Explorer, but it's deprecated, so we don't care.
-  $(".question-option").removeClass("click-button").removeAttr("onclick");
+  $(".question-option").removeClass("click-button")
+                       .addClass("answered-button")
+                       .removeAttr("onclick");
 
   // To make all incorrect questions smaller...
   $(".question-option").not("#" + correct_id).animate({
@@ -441,8 +443,10 @@ function remove_question(answer_id) {
 
   let [category, question_num, answer_num] = answer_id.split("-");
   let question_id = category + "-" + question_num;
-                                                  //LC and ES
-  $("#" + question_id).removeClass("click-button").addClass("answered-button")
+  
+  // answered-button addition by LC and ES
+  $("#" + question_id).removeClass("click-button")
+                      .addClass("answered-button")
                       .removeAttr("onclick")
   
 }
