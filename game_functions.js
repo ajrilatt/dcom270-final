@@ -345,8 +345,14 @@ async function process_answer(answer_id) {
 
   if (questions_remaining < 1) {
 
-    // TODO: Add an animation here, then redirect once it's done.
-    await sleep(2000);
+    // #santa has a CSS transitionX animation, so this results in Santa flying
+    // across the bottom of the screen.
+    // Animation by LC
+    $("body").append(`
+        <div id="santa">
+        </div>
+    `);
+    await sleep(5000);
     
     scoreboard_redirect(score_stats);
     

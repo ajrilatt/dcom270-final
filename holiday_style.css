@@ -201,22 +201,44 @@ darkening the page as is common when a modal opens. */
   
 }
 
+/* textAnimation and .enlarge-shrink-glow by LC */
 @keyframes textAnimation {
-      0% {
-        font-size: 16px;
-        text-shadow: none;
-      }
-      50% {
-        font-size: 24px;
-        text-shadow: 0 0 10px rgba(255, 215, 0);
-      }
-      100% {
-        font-size: 16px;
-        text-shadow: none;
-      }
-    }
+  0% {
+    font-size: 16px;
+    text-shadow: none;
+  }
+  50% {
+    font-size: 24px;
+    text-shadow: 0 0 10px rgba(255, 215, 0);
+  }
+  100% {
+    font-size: 16px;
+    text-shadow: none;
+  }
+}
 
-    .enlarge-shrink-glow {
-      display: inline-block;
-      animation: textAnimation 2s;
-    }
+/* Used to animate the score growing and shrinking on successful question answer. */
+.enlarge-shrink-glow {
+  display: inline-block;
+  animation: textAnimation 2s;
+}
+
+/* fly and #santa by LC */
+@keyframes fly {
+  to {
+    transform: translateX(calc(-1 * (100vw + 480px))); /* Move Santa across the screen */
+  }
+}
+
+#santa {
+  z-index: 2;
+  background-image: url('media/santa.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 160px;
+  width: 480px;
+  position: absolute;
+  bottom: 0;
+  right: -480px; /* start position outside the screen */
+  animation: fly 5s linear;
+}
