@@ -79,7 +79,8 @@ $(document).ready(function() {
   let dx, xp, yp;    // coordinate and position variables
   let am, stx, sty;  // amplitude and step variables
   let i, doc_width = 800, doc_height = 600; 
-  
+
+// Page measurements
   if (ns6up) {
     doc_width = self.innerWidth;
     doc_height = self.innerHeight;
@@ -88,6 +89,7 @@ $(document).ready(function() {
     doc_height = iecompattest().clientHeight;
   }
 
+// Duplicates snow/decides how many appear
   dx = new Array();
   xp = new Array();
   yp = new Array();
@@ -110,7 +112,7 @@ $(document).ready(function() {
       }
     }
   }
-
+// Snow spacing
   function snowIE_NS6() {  
     doc_width = ns6up?window.innerWidth-10 : iecompattest().clientWidth-10;
     doc_height=(window.innerHeight && snowdistance=="windowheight")? window.innerHeight : (ie4up && snowdistance=="windowheight")?  iecompattest().clientHeight : (ie4up && !window.opera && snowdistance=="pageheight")? iecompattest().scrollHeight : iecompattest().offsetHeight;
@@ -123,7 +125,7 @@ $(document).ready(function() {
     for (i = 0; i < no; ++ i) {  // iterate for every dot
       yp[i] += sty[i];
       if (yp[i] > doc_height-50) {
-        xp[i] = Math.random()*(doc_width-am[i]-30);
+        xp[i] = Math.random()*(doc_width-am[i]-30); //Configures how many, what appears when
         yp[i] = 0;
         stx[i] = 0.02 + Math.random()/10;
         sty[i] = 0.7 + Math.random();
@@ -134,13 +136,13 @@ $(document).ready(function() {
     }
     snowtimer=setTimeout("snowIE_NS6()", 10);
   }
-
+// Hide snow at length
   function hidesnow(){
     if (window.snowtimer) clearTimeout(snowtimer)
     for (i=0; i<no; i++) document.getElementById("dot"+i).style.visibility="hidden"
   }
     
-
+// Hide snow at certain time
 if (ie4up||ns6up){
     snowIE_NS6();
     if (hidesnowtime>0)
