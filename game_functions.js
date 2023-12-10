@@ -337,7 +337,7 @@ async function process_answer(answer_id) {
 
   // Give the user some time to view their results.
   await sleep(2000);
-  
+  $("#point-counter").toggleClass('enlarge-shrink-glow');
   remove_question(answer_id);
 
   // Close the question slide.
