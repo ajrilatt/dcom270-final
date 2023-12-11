@@ -337,7 +337,7 @@ async function process_answer(answer_id) {
 
   // Give the user some time to view their results.
   await sleep(2000);
-  $("#point-counter").toggleClass('enlarge-shrink-glow');
+  $("#point-counter").removeClass('enlarge-shrink-glow');
   remove_question(answer_id);
 
   // Close the question slide.
@@ -372,7 +372,7 @@ function grade_answer(answer_id) {
     user_score += num_points;
     $("#point-counter").html(user_score);
     // toggle class function by LC
-    $("#point-counter").toggleClass('enlarge-shrink-glow');
+    $("#point-counter").addClass('enlarge-shrink-glow');
   }
 
   // If the user hasn't achieved a rank statistic yet, update the trackers
